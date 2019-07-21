@@ -1,0 +1,13 @@
+[{
+  "file": "C:\\Users\\James\\code\\solid\\src\\geo.h",
+  "directory": "C:\\Users\\James\\code\\solid\\build\\codelite",
+  "command": "clang  -c C:\\Users\\James\\code\\solid\\src\\geo.h -o C:\\Users\\James\\code\\solid\\src\\geo.h.o -target x86_64-pc-windows-gnu -I. -I. -I../src  -g  -O0  -Wall"
+ }, {
+  "file": "C:\\Users\\James\\code\\solid\\src\\main.cpp",
+  "directory": "C:\\Users\\James\\code\\solid\\build\\codelite",
+  "command": "clang  -c C:\\Users\\James\\code\\solid\\src\\main.cpp -o C:\\Users\\James\\code\\solid\\src\\main.cpp.o -target x86_64-pc-windows-gnu -I. -I. -I../src  -g  -O0  -Wall"
+ }, {
+  "file": "C:\\Users\\James\\code\\so20253242\\codelite\\echoer\\main.cpp",
+  "directory": "C:\\Users\\James\\code\\so20253242\\codelite\\echoer",
+  "command": "clang  -c C:\\Users\\James\\code\\so20253242\\codelite\\echoer\\main.cpp -o C:\\Users\\James\\code\\so20253242\\codelite\\echoer\\main.cpp.o -target x86_64-pc-windows-gnu -I. -I. -IC:\\Users\\James\\code\\boost\\boost_1_69_0  -g  -O0  -Wall"
+ }]
