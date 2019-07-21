@@ -1,11 +1,10 @@
 # Servitor
 Minimize total distance between clients and servers.
 
-/** 1D Server Location optimization
+/** Server Location optimization
  * 
  * Minimizes the total distance between clients and servers.
  * 
- * Clients and servers are located along a line.
  * The client locations and the number of servers are specified.
  */
  
@@ -22,13 +21,13 @@ Minimize total distance between clients and servers.
  
  5
 10
-1
-2
-3
-6
-7
-9
-11
-22
-44
-50
+1 0 0
+2 0 0
+3 0 0
+6 0 0
+7 0 0
+9 0 0
+11 0 0
+22 0 0 
+44 0 0
+50 0 0
