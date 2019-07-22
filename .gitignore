@@ -32,4 +32,5 @@
 *.app
 
 .codelite/*
+build/codelite/servitor/.codelite/*
 

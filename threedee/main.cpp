@@ -5,6 +5,8 @@
  * The client locations and the number of servers are specified.
  * Servers are located at client locations
  */
+
+#include <sstream>
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -25,21 +27,81 @@ public:
 		double dz = z - o.z;
 		return sqrt( dx*dx+dy*dy+dz*dz );
 	}
+
+	string Text();
 };
 
-// Input specifications
-int S;	// number of servers
-int L;  // number of clients
-std::vector< cLoc > vl;	// the client locations
+class cServitor
+{
+public:
+	int myServerCount;						// specified number of servers to place
+	vector< cLoc > myClientLocations;		// specified client locations
 
+	// server locations giving minimum total distance
+	// servers are located at the same location as one of the clients
+	// this stores the index to the client where the server is located
+	vector< int > myServerLocations;
+	double myMinTotal;
+
+	void Input();
+	string InputText();
+	void Optimize();
+	string ResultsText();
+	void Test();
+
+	void SaveIfBetter( const vector<int>& ServerLocation );
+
+	int sum_all_distances( const vector<int>& ServerLocations ) const;
+
+	void ClientLocations( const vector<int>& L );
+
+	int ClientCount()
+	{
+		return myClientLocations.size();
+	}
+	cLoc ClientLocation( int k );
+
+};
+
+cServitor theServitor;
+
+// Input specifications
+//int S;	 number of servers
+//int L;   number of clients
+//std::vector< cLoc > vl;	 the client locations
+//
 // Output results
 
-int min_total = 100000;	// min total distance found
+//int min_total = 100000;	// min total distance found
 
-// server locations giving minimum total distance
-// servers are located at the same location as one of the clients
-// this stores the index to the client where the server is located
-vector<int> min_loc;	
+
+
+string cLoc::Text()
+{
+	stringstream ss;
+	ss << x <<" "<< y <<" "<< z;
+	return ss.str();
+}
+
+void cServitor::ClientLocations( const vector<int>& L )
+{
+	myClientLocations.clear();
+	cLoc l;
+	for( int k = 0; k < L.size(); k += 3 ) {
+		l.x = L[k];
+		l.y = L[k+1];
+		l.z = L[k+2];
+		myClientLocations.push_back( l );
+	}
+}
+
+cLoc cServitor::ClientLocation( int k )
+{
+	if( 0 > k || k >= myClientLocations.size() )
+		throw std::runtime_error("AOB");
+	return myClientLocations[ k ];
+}
+
 
 /** Read problem spacifcation from stdin
  *
@@ -49,36 +111,44 @@ vector<int> min_loc;
  * line 3: client location
  * ...
  */
-void Input()
+void cServitor::Input()
 {
-	cin >> S;
+	myClientLocations.clear();
+
+	cin >> myServerCount;
+	int L;
 	cin >> L;
 	for( int kl = 0; kl < L; kl++ ) {
 		cLoc l;
 		cin >> l.x;
 		cin >> l.y;
 		cin >> l.z;
-		vl.push_back( l );
+		myClientLocations.push_back( l );
 	}
 
-	cout << " client locations: ";
-	for( auto& l : vl )
-		cout << l.x <<" "<< l.y <<" "<< l.z << ", ";
-	cout << "\n";
-	return ;
+	cout << InputText() << "\n";
 }
 
-int sum_all_distances( vector<int>& locs )
+string cServitor::InputText()
+{
+	stringstream ss;
+	ss << " client locations: ";
+	for( auto& l : myClientLocations )
+		ss << l.x <<" "<< l.y <<" "<< l.z << ", ";
+	return ss.str();
+}
+
+int cServitor::sum_all_distances( const vector<int>& locs ) const
 {
 	int total = 0;
 	// loop over clients
-	for( int ka = 0; ka < L; ka++ ) {
+	for( int ka = 0; ka < theServitor.myClientLocations.size(); ka++ ) {
 		int min_d = 20000;
 		// loop over servers
-		for( int kt = 0; kt < S;  kt++ ) {
+		for( int kt = 0; kt < theServitor.myServerCount;  kt++ ) {
 
 			// distance between server and client
-			double d = vl[ka].dist( vl[ locs[kt] ]);
+			double d = theServitor.ClientLocation(ka).dist( theServitor.ClientLocation( locs[kt] ));
 
 			// save if closest server to client
 			if( d < min_d )
@@ -91,29 +161,41 @@ int sum_all_distances( vector<int>& locs )
 	return total;
 }
 
-void Dump()
+string cServitor::ResultsText()
 {
-	cout << "min total " << min_total << "\n";
-	for( auto l : min_loc )
-		cout << vl[l].x <<" "<< vl[l].y <<" "<< vl[l].z << ", ";
-	cout << "\n";
+	stringstream ss;
+	ss << "min total " << myMinTotal << "\n";
+	for( auto i : myServerLocations )
+		ss << ClientLocation(i).Text() << ", ";
+	return ss.str();
 }
 
-// https://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
+void cServitor::SaveIfBetter( const vector<int>& ServerLocation )
+{
+	// calculate total distance from all clients to their nearest server
+	int td = sum_all_distances( ServerLocation );
+	if( td < myMinTotal ) {
+		// record a new minimum
+		myMinTotal = td;
+		myServerLocations = ServerLocation;
+	}
+}
+
+/**
+ * @brief Recursive function to test all possible combinations of server positions
+ * @param places  test server locations
+ * @param placed  number of servers placed in test server locations
+ * 
+ *  For an explanation of how this works:
+ *  https://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
+ */
 void combination(
     vector<int> places,
     int placed )
 {
-	// check if all Servers have beem placed
-	if( placed == S ) {
-
-		// calculate total distance from all clients to their nearest server
-		int td = sum_all_distances( places );
-		if( td < min_total ) {
-			// record a new minimum
-			min_total = td;
-			min_loc = places;
-		}
+	// check if all Servers have been placed
+	if( placed == theServitor.myServerCount ) {
+		theServitor.SaveIfBetter( places );
 		return;
 	}
 	// loop over locations to the 'left' of last placed
@@ -122,24 +204,59 @@ void combination(
 		i = 0;
 	else
 		i = places[placed-1]+1;
-	for( ; i < L; i++ ) {
+	for( ; i < theServitor.ClientCount(); i++ ) {
 
-		// place an ATM
+		// place a server
 		places[placed] = i;
 
-		// place the remaining ATMs
+		// place the remaining Servers
 		combination( places, placed+1 );
 	}
 }
 
+void cServitor::Optimize()
+{
+	myMinTotal = 1000000;
+	vector< int > P( myServerCount );
+	combination( P, 0 );
+}
+
+void cServitor::Test()
+{
+	myServerCount = 5;
+	ClientLocations( {
+		1, 0, 0,
+		2, 0, 0,
+		3, 0, 0,
+		6, 0, 0,
+		7, 0, 0,
+		9, 0, 0,
+		11, 0, 0,
+		22, 0, 0,
+		44, 0, 0,
+		50, 0, 0
+	} );
+
+	Optimize();
+
+	string R = ResultsText();
+	if( R.find("min total 9") == -1 ) {
+		cout << InputText() << "\n";
+		cout << R << "\n";
+		throw runtime_error("Test Failed");
+	}
+	cout << "Test Passed\n";
+}
+
 int main(int argc, char** argv)
 {
+	theServitor.Test();
 
-	Input();
+	theServitor.Input();
 
-	vector< int > P( S );
-	combination( P, 0 );
-	Dump();
+	theServitor.Optimize();
+
+	cout << theServitor.ResultsText() << "\n";
 
 	return 0;
 }

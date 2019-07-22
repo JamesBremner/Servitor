@@ -5,7 +5,7 @@
 ## Debug
 ProjectName            :=Servitor3D
 ConfigurationName      :=Debug
-WorkspacePath          :=C:/Users/James/code/Servitor
+WorkspacePath          :=C:/Users/James/code/Servitor/build/codelite/servitor
 ProjectPath            :=C:/Users/James/code/Servitor/threedee
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=James
-Date                   :=21/07/2019
+Date                   :=22/07/2019
 CodeLitePath           :="C:/Program Files/CodeLite"
 LinkerName             :=C:/msys64/mingw64/bin/g++.exe
 SharedObjectLinkerName :=C:/msys64/mingw64/bin/g++.exe -shared -fPIC
