@@ -45,7 +45,7 @@ void combination(
 	for( ; i < theServitor.ClientCount(); i++ ) {
 
 		// place a server
-		places[placed++] = i;
+		places[placed] = i;
 
 		// place the remaining Servers
 		combination( places, placed+1 );
