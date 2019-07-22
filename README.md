@@ -31,3 +31,9 @@ Minimize total distance between clients and servers.
 22 0 0 
 44 0 0
 50 0 0
+
+Two optimizing algorithms are implemented:
+
+ - Exhaustive search gives the absolute minimum total distance, but is too slow from more than ~30 clients
+ 
+ - K-Means clustering gives an answer in a reasonable time for larger number of clients with a total distance reasonably close to the absolute minimum
