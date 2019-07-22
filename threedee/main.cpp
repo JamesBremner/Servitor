@@ -24,7 +24,7 @@ cServitor theServitor;
  * @brief Recursive function to test all possible combinations of server positions
  * @param places  test server locations
  * @param placed  number of servers placed in test server locations
- * 
+ *
  *  For an explanation of how this works:
  *  https://www.geeksforgeeks.org/print-all-possible-combinations-of-r-elements-in-a-given-array-of-size-n/
  */
@@ -33,13 +33,13 @@ void combination(
     int placed )
 {
 	raven::set::cRunWatch w("combination");
-	
+
 	// check if all Servers have been placed
 	if( placed == theServitor.myServerCount ) {
 		theServitor.SaveIfBetter( places );
 		return;
 	}
-	
+
 	// loop over locations to the 'left' of last placed
 	int i;
 	if( ! placed )
@@ -59,12 +59,18 @@ void combination(
 
 int main(int argc, char** argv)
 {
-	theServitor.Test();
+	//theServitor.Test();
+
+	theServitor.TestPerformance();
 
 	theServitor.Input();
 
+    theServitor.myOptimizer = cServitor::eOptimizer::kmeans;
 	theServitor.Optimize();
+	cout << theServitor.ResultsText() << "\n";
 
+	theServitor.myOptimizer = cServitor::eOptimizer::exhaustive_search;
+	theServitor.Optimize();
 	cout << theServitor.ResultsText() << "\n";
 
 	return 0;

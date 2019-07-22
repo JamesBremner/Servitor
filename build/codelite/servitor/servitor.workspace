@@ -2,7 +2,7 @@
 <CodeLite_Workspace Name="servitor" Database="" Version="10.0.0">
   <Project Name="servitor3D" Path="../../../threedee/servitor3D.project" Active="No"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
       <Project Name="Servitor3D" ConfigName="Debug"/>
     </WorkspaceConfiguration>

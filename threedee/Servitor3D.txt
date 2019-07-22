@@ -1,1 +1,1 @@
-./Debug/cServitor.cpp.o ./Debug/up_up_raven-set_cRunWatch.cpp.o ./Debug/main.cpp.o   
+./Release/cServitor.cpp.o ./Release/up_up_raven-set_cRunWatch.cpp.o ./Release/main.cpp.o   
