@@ -11,6 +11,8 @@
 #include <vector>
 #include <cmath>
 
+#include "cRunWatch.h"
+
 #include "cServitor.h"
 
 using namespace std;
@@ -30,6 +32,8 @@ void combination(
     vector<int> places,
     int placed )
 {
+	raven::set::cRunWatch w("combination");
+	
 	// check if all Servers have been placed
 	if( placed == theServitor.myServerCount ) {
 		theServitor.SaveIfBetter( places );

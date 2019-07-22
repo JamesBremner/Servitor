@@ -38,12 +38,12 @@ MakeDirCommand         :=makedir
 RcCmpOptions           := 
 RcCompilerName         :=C:/msys64/mingw64/bin/windres.exe
 LinkOptions            :=  -static -m64 -static-libstdc++ -static-libgcc
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). $(IncludeSwitch)C:\Users\James\code\raven-set $(IncludeSwitch)C:\Users\James\code\boost\boost_1_70_0 
 IncludePCH             := 
 RcIncludePath          := 
-Libs                   := 
-ArLibs                 :=  
-LibPath                := $(LibraryPathSwitch). 
+Libs                   := $(LibrarySwitch)boost_system-mgw82-mt-x64-1_70 $(LibrarySwitch)boost_thread-mgw82-mt-x64-1_70 
+ArLibs                 :=  "libboost_system-mgw82-mt-x64-1_70.a" "libboost_thread-mgw82-mt-x64-1_70.a" 
+LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)C:\Users\James\code\boost\boost_1_70_0\stage\lib 
 
 ##
 ## Common variables
@@ -62,7 +62,7 @@ AS       := C:/msys64/mingw64/bin/as.exe
 ## User defined environment variables
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
-Objects0=$(IntermediateDirectory)/cServitor.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/cServitor.cpp$(ObjectSuffix) $(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
 
 
 
@@ -100,6 +100,14 @@ $(IntermediateDirectory)/cServitor.cpp$(DependSuffix): cServitor.cpp
 
 $(IntermediateDirectory)/cServitor.cpp$(PreprocessSuffix): cServitor.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/cServitor.cpp$(PreprocessSuffix) cServitor.cpp
+
+$(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(ObjectSuffix): ../../raven-set/cRunWatch.cpp $(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/James/code/raven-set/cRunWatch.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(DependSuffix): ../../raven-set/cRunWatch.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(DependSuffix) -MM ../../raven-set/cRunWatch.cpp
+
+$(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(PreprocessSuffix): ../../raven-set/cRunWatch.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/up_up_raven-set_cRunWatch.cpp$(PreprocessSuffix) ../../raven-set/cRunWatch.cpp
 
 $(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/James/code/Servitor/threedee/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)

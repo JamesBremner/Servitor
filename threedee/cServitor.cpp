@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cmath>
 
+#include "cRunWatch.h"
+
 #include "cServitor.h"
 
 string cLoc::Text()
@@ -116,7 +118,13 @@ void cServitor::Optimize()
 		
 	myMinTotal = 1000000;
 	vector< int > P( myServerCount );
+	
+	raven::set::cRunWatch::Start();
+	raven::set::cRunWatch w("cServitor::Optimize");
+	
 	combination( P, 0 );
+	
+	raven::set::cRunWatch::Report();
 }
 
 void cServitor::Test()

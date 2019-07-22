@@ -8,10 +8,14 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="../../raven-set/cRunWatch.h"/>
+    <File Name="../../raven-set/cRunWatch.cpp"/>
     <File Name="cServitor.cpp"/>
     <File Name="cServitor.h"/>
     <File Name="main.cpp"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
+  <Dependencies Name="Release"/>
   <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="" Assembler="">
@@ -25,8 +29,14 @@
     <Configuration Name="Debug" CompilerType="MinGW ( gcc.exe (Rev1, Built by MSYS2 project) 8.2.1 20181214 )" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
+        <IncludePath Value="C:\Users\James\code\raven-set"/>
+        <IncludePath Value="C:\Users\James\code\boost\boost_1_70_0"/>
       </Compiler>
-      <Linker Options="-static;-m64;-static-libstdc++;-static-libgcc" Required="yes"/>
+      <Linker Options="-static;-m64;-static-libstdc++;-static-libgcc" Required="yes">
+        <LibraryPath Value="C:\Users\James\code\boost\boost_1_70_0\stage\lib"/>
+        <Library Value="libboost_system-mgw82-mt-x64-1_70.a"/>
+        <Library Value="libboost_thread-mgw82-mt-x64-1_70.a"/>
+      </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../bin/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
@@ -102,6 +112,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug"/>
-  <Dependencies Name="Release"/>
 </CodeLite_Project>
