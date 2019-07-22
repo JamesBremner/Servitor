@@ -41,24 +41,50 @@ public:
 	// servers are located at the same location as one of the clients
 	// this stores the index to the client where the server is located
 	vector< int > myServerLocations;
+	
+	// minimum total distances between clients and their nearest server
 	double myMinTotal;
 
+	/// Input problem specs from stdin
 	void Input();
+	
+	/// Human readable input specs
 	string InputText();
+	
+	/// Optimize server locations
 	void Optimize();
+	
+	/// Human readable results
 	string ResultsText();
+	
+	/// Run unit tests
 	void Test();
 
+/**
+ * @brief Save results if the minimum total distance is smaller than previous
+ * @param ServerLocation  test locations of servers
+ */
 	void SaveIfBetter( const vector<int>& ServerLocation );
-
+	
+/**
+ * @brief Calculate total distances between clients and their nearest server
+ * @param ServerLocations locations of servers
+ */
 	int sum_all_distances( const vector<int>& ServerLocations ) const;
 
-	void ClientLocations( const vector<int>& L );
+/**
+ * @brief Set client locations
+ * @param L vector of x,y,z locations for clients
+ */
+	void ClientLocations( const vector<double>& L );
 
+/// Number of clients
 	int ClientCount()
 	{
 		return myClientLocations.size();
 	}
+	
+/// Location of kth client
 	cLoc ClientLocation( int k );
 
 };
@@ -83,11 +109,11 @@ string cLoc::Text()
 	return ss.str();
 }
 
-void cServitor::ClientLocations( const vector<int>& L )
+void cServitor::ClientLocations( const vector<double>& L )
 {
 	myClientLocations.clear();
 	cLoc l;
-	for( int k = 0; k < L.size(); k += 3 ) {
+	for( int k = 0; k < (int)L.size(); k += 3 ) {
 		l.x = L[k];
 		l.y = L[k+1];
 		l.z = L[k+2];
@@ -97,7 +123,7 @@ void cServitor::ClientLocations( const vector<int>& L )
 
 cLoc cServitor::ClientLocation( int k )
 {
-	if( 0 > k || k >= myClientLocations.size() )
+	if( 0 > k || k >= (int)myClientLocations.size() )
 		throw std::runtime_error("AOB");
 	return myClientLocations[ k ];
 }
@@ -142,7 +168,7 @@ int cServitor::sum_all_distances( const vector<int>& locs ) const
 {
 	int total = 0;
 	// loop over clients
-	for( int ka = 0; ka < theServitor.myClientLocations.size(); ka++ ) {
+	for( int ka = 0; ka < (int)theServitor.myClientLocations.size(); ka++ ) {
 		int min_d = 20000;
 		// loop over servers
 		for( int kt = 0; kt < theServitor.myServerCount;  kt++ ) {
@@ -240,7 +266,7 @@ void cServitor::Test()
 	Optimize();
 
 	string R = ResultsText();
-	if( R.find("min total 9") == -1 ) {
+	if( (int)R.find("min total 9") == -1 ) {
 		cout << InputText() << "\n";
 		cout << R << "\n";
 		throw runtime_error("Test Failed");
