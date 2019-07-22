@@ -62,7 +62,7 @@ AS       := C:/msys64/mingw64/bin/as.exe
 ## User defined environment variables
 ##
 CodeLiteDir:=C:\Program Files\CodeLite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/cServitor.cpp$(ObjectSuffix) $(IntermediateDirectory)/main.cpp$(ObjectSuffix) 
 
 
 
@@ -93,6 +93,14 @@ PreBuild:
 ##
 ## Objects
 ##
+$(IntermediateDirectory)/cServitor.cpp$(ObjectSuffix): cServitor.cpp $(IntermediateDirectory)/cServitor.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/James/code/Servitor/threedee/cServitor.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/cServitor.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/cServitor.cpp$(DependSuffix): cServitor.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/cServitor.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/cServitor.cpp$(DependSuffix) -MM cServitor.cpp
+
+$(IntermediateDirectory)/cServitor.cpp$(PreprocessSuffix): cServitor.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/cServitor.cpp$(PreprocessSuffix) cServitor.cpp
+
 $(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/James/code/Servitor/threedee/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp

@@ -1,1 +1,1 @@
-./Debug/main.cpp.o   
+./Debug/cServitor.cpp.o ./Debug/main.cpp.o   
